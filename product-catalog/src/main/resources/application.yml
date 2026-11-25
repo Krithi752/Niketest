@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: product-catalog
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/catalog_db}
+    username: ${SPRING_DATASOURCE_USERNAME:catalog_user}
+    password: ${SPRING_DATASOURCE_PASSWORD:catalog_password}
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 500
+        order_inserts: true
+  flyway:
+    enabled: true
+  data:
+    redis:
+      host: ${SPRING_DATA_REDIS_HOST:localhost}
+      port: ${SPRING_DATA_REDIS_PORT:6379}
+      timeout: 2000ms
+
+app:
+  seed:
+    enabled: ${APP_SEED_ENABLED:true}
+    count: ${APP_SEED_COUNT:10000}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
